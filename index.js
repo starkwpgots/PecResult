@@ -36,7 +36,7 @@ app.get('/screenshot', async (req, res) => {
         return res.status(400).send('Invalid sem parameter');
     }
     try {
-        const browser = await puppeteer.launch({ protocolTimeout: 500 });
+        const browser = await puppeteer.launch({ protocolTimeout: 5000 });
         const page = await browser.newPage();
         await page.setViewport({ width: 1080, height: 1024 });
         await page.goto('https://exam.pondiuni.edu.in/results/');
