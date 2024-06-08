@@ -64,7 +64,7 @@ app.get('/screenshot', async (req, res) => {
 
         let screenshotPath = path.join(__dirname, `${rollno}.png`);
         try {
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise(resolve => setTimeout(resolve, 5000));
             await page.screenshot({ path: screenshotPath });
             await page.close();
             await browser.close();
