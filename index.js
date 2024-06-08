@@ -23,7 +23,7 @@ const semesterMapping = {
 app.get('/', async (req, res) => {
     return res.status(200).send({ 'status': 'running' })
 })
-
+const browser = await puppeteer.launch({ protocolTimeout: 500 });
 app.get('/screenshot', async (req, res) => {
     const { rollno, sem } = req.query;
 
@@ -36,7 +36,6 @@ app.get('/screenshot', async (req, res) => {
         return res.status(400).send('Invalid sem parameter');
     }
     try {
-        const browser = await puppeteer.launch({ protocolTimeout: 500 });
         const page = await browser.newPage();
         await page.setViewport({ width: 1080, height: 1024 });
         await page.goto('https://exam.pondiuni.edu.in/results/');
@@ -66,7 +65,7 @@ app.get('/screenshot', async (req, res) => {
         try {
             await new Promise(resolve => setTimeout(resolve, 500));
             await page.screenshot({ path: screenshotPath });
-            await browser.close();
+            await page.close();
             res.sendFile(screenshotPath, err => {
                 if (err) {
                     console.error('Failed to send file:', err);
